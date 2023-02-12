@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar</title>
+</head>
+<body>
+
+<div>
+    <nav class="navbar navbar-custom navbar-expand-lg navbar-light bg-light">
+        <a href="/">
+            <img alt="brewbox logo" th:src="@{/images/logo.png}" class="logo">
+        </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto col-12 justify-content-between">
+                <li class="nav-item">
+                    <a class="nav-link" href="/products/search">Search</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/brands/all">All Brands</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products/all">All Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/add/product">Add Product</a>
+                        <a class="dropdown-item" href="/add/brand">Add Brand</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/add/admin">Add Admin</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="form-inline my-2 my-lg-0 border px-3">
+                        <!--            <div class="logged-user">Welcome, </div>-->
+                        <form th:action="@{/logout}"
+                              th:method="post">
+                            <input class="btn btn-link nav-link" type="submit" value="Logout">
+                        </form>
+                    </div>
+                </li>
+
+                <!--        <th:block sec:authorize="!isAuthenticated()">-->
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/register}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/login}">Login</a>
+                </li>
+                <!--        </th:block>-->
+            </ul>
+        </div>
+    </nav>
+
+
+</div>
+
+</body>
+</html>
