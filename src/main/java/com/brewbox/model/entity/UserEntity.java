@@ -40,4 +40,8 @@ public class UserEntity extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
     private Set<UserRoleEntity> roles;
+
+    public void addRole(UserRoleEntity role){
+        roles.add(role);
+    }
 }

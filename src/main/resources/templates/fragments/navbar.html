@@ -19,10 +19,10 @@
                     <a class="nav-link" href="/products/search">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/brands/all">All Brands</a>
+                    <a class="nav-link" href="/brands">All Brands</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/products/all">All Products</a>
+                    <a class="nav-link" href="/products">All Products</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
@@ -30,10 +30,10 @@
                         Admin
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/add/product">Add Product</a>
-                        <a class="dropdown-item" href="/add/brand">Add Brand</a>
+                        <a class="dropdown-item" href="/products/add">Add Product</a>
+                        <a class="dropdown-item" href="/brands/add">Add Brand</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/add/admin">Add Admin</a>
+                        <a class="dropdown-item" href="/admins/add">Add Admin</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -48,10 +48,10 @@
 
                 <!--        <th:block sec:authorize="!isAuthenticated()">-->
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/register}">Register</a>
+                    <a class="nav-link" th:href="@{/users/register}">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/login}">Login</a>
+                    <a class="nav-link" th:href="@{/users/login}">Login</a>
                 </li>
                 <!--        </th:block>-->
             </ul>
