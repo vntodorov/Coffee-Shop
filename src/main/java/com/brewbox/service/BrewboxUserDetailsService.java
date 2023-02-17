@@ -1,5 +1,6 @@
 package com.brewbox.service;
 
+import com.brewbox.model.entity.BrewboxUserDetails;
 import com.brewbox.model.entity.UserEntity;
 import com.brewbox.model.entity.UserRoleEntity;
 import com.brewbox.repository.UserRepository;
@@ -15,21 +16,18 @@ public class BrewboxUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    private final ModelMapper mapper;
-
     @Autowired
-    public BrewboxUserDetailsService(UserRepository userRepository, ModelMapper mapper) {
+    public BrewboxUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.mapper = mapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String registerAttribute) throws UsernameNotFoundException {
 
-        if (userRepository.findByUsername(registerAttribute).isPresent()){
-            mapper.map(userRepository.findByUsername(registerAttribute).get())
+        if (userRepository.findByUsername(registerAttribute).isPresent()) {
+            return mapToUser(userRepository.findByUsername(registerAttribute).get());
         } else if (userRepository.findByEmail(registerAttribute).isPresent()) {
-            return null;
+            return mapToUser(userRepository.findByEmail(registerAttribute).get());
         } else {
             throw new UsernameNotFoundException("User with username/email " + registerAttribute + " not found!");
         }
@@ -39,11 +37,12 @@ public class BrewboxUserDetailsService implements UserDetailsService {
     private UserDetails mapToUser(UserEntity userEntity) {
 
         return new BrewboxUserDetails(
-                userEntity.getId(),
+                userEntity.getUsername(),
+                userEntity.getFirstName(),
+                userEntity.getMiddleName(),
+                userEntity.getLastName(),
                 userEntity.getPassword(),
                 userEntity.getEmail(),
-                userEntity.getFirstName(),
-                userEntity.getLastName(),
                 userEntity.
                         getRoles().
                         stream().

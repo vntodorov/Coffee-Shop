@@ -1,6 +1,7 @@
 package com.brewbox.config;
 
 import com.brewbox.repository.UserRepository;
+import com.brewbox.service.BrewboxUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,7 +52,7 @@ public class SecurityConfig {
     @Primary
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return new UserDetailsService(userRepository);
+        return new BrewboxUserDetailsService(userRepository);
     }
 
 

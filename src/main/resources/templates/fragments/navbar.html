@@ -24,36 +24,37 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/products">All Products</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN') || hasRole('MODERATOR')">
                     <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Admin
+                        Operations
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/products/add">Add Product</a>
-                        <a class="dropdown-item" href="/brands/add">Add Brand</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/admins/add">Add Admin</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')"  href="/brands/add">Add Brand</a>
+                        <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/add">Add Admin</a>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" sec:authorize="isAuthenticated()">
                     <div class="form-inline my-2 my-lg-0 border px-3">
-                        <!--            <div class="logged-user">Welcome, </div>-->
-                        <form th:action="@{/logout}"
+                    <div class="logged-user">Welcome, <th:block th:text="${#authentication.principal.fullName}">X</th:block>!</div>
+                        <form th:action="@{users/logout}"
                               th:method="post">
                             <input class="btn btn-link nav-link" type="submit" value="Logout">
                         </form>
                     </div>
                 </li>
 
-                <!--        <th:block sec:authorize="!isAuthenticated()">-->
+                <th:block sec:authorize="!isAuthenticated()">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users/register}">Register</a>
+                    <a class="nav-link"
+                       th:href="@{/users/register}">Register</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/users/login}">Login</a>
                 </li>
-                <!--        </th:block>-->
+               </th:block>
             </ul>
         </div>
     </nav>

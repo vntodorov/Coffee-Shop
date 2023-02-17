@@ -15,13 +15,30 @@
 
 <div class="container">
     <h2 class="text-center text-white">Register User</h2>
-    <form
+    <form th:action="@{/users/register}"
+          th:method="post"
+          th:object="${userRegisterDTO}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="firstName" class="text-white font-weight-bold">Username</label>
+                <input
+                        id="Username"
+                        th:field="*{username}"
+                        th:errorclass="is-invalid"
+                        type="text"
+                        class="form-control"
+                        placeholder="Username"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Username is required.
+                </p>
+            </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="firstName" class="text-white font-weight-bold">First Name</label>
                 <input
                         id="firstName"
+                        th:field="*{firstName}"
+                        th:errorclass="is-invalid"
                         type="text"
                         class="form-control"
                         placeholder="First name"/>
@@ -30,8 +47,23 @@
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
+                <label for="middleName" class="text-white font-weight-bold">Middle Name</label>
+                <input
+                        id="middleName"
+                        th:field="*{middleName}"
+                        th:errorclass="is-invalid"
+                        type="text"
+                        class="form-control"
+                        placeholder="Middle name"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Middle name should be between 2 and 20 symbols.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
                 <label for="lastName" class="text-white font-weight-bold">Last Name</label>
                 <input id="lastName"
+                       th:field="*{lastName}"
+                       th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
                        placeholder="Last name"/>
@@ -44,19 +76,23 @@
             <div class="form-group col-md-6 mb-3">
                 <label for="email" class="text-white font-weight-bold">Email</label>
                 <input id="email"
+                       th:field="*{email}"
+                       th:errorclass="is-invalid"
                        type="text"
                        class="form-control"
                        placeholder="Email"/>
                 <div class="invalid-feedback errors alert alert-danger">
-                    <!--<div
+                    <div
                             th:each="err : ${#fields.errors('email')}"
                             th:text="${err}"
-                    />-->
+                    />
                 </div>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="password" class="text-white font-weight-bold">Password</label>
                 <input id="password"
+                       th:field="*{password}"
+                       th:errorclass="is-invalid"
                        type="password"
                        class="form-control"
                        placeholder="Password"/>
@@ -68,6 +104,8 @@
         <div class="form-group">
             <label for="confirmPassword" class="text-white font-weight-bold">Confirm Password</label>
             <input id="confirmPassword"
+                   th:field="*{confirmPassword}"
+                   th:errorclass="is-invalid"
                    type="password"
                    class="form-control"
                    placeholder="Confirm Password"/>

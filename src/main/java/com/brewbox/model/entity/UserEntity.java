@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -39,7 +40,7 @@ public class UserEntity extends BaseEntity{
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Set<UserRoleEntity> roles;
+    private Set<UserRoleEntity> roles = new HashSet<>();
 
     public void addRole(UserRoleEntity role){
         roles.add(role);
