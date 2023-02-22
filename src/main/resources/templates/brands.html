@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Brands</title>
+    <th:block th:include="~{fragments/head}"/>
 </head>
+
+<div th:replace="fragments/navbar">Navbar</div>
+
 <body>
 
+<div th:each="brand: ${brands}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+    <div class="card-img-top-wrapper">
+        <img class="card-img-top" th:src="${brand.imageUrl}" alt="Brand image">
+    </div>
+    <div class="card-body pb-1">
+        <h5 class="card-title"></h5>
+    </div>
+    <ul class="offer-details list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="card-text"><span th:text="'Name: ' + ${brand.name}"></span></div>
+            <div class="card-text"><span th:text="'Description: ' + ${brand.description}"></span></div>
+        </li>
+    </ul>
+    <div class="card-body">
+        <a class="card-link" th:href="@{http://www.{name}.com(name = ${#strings.replace(brand.name,' ','')})}">Brand's website</a>
+    </div>
+</div>
+</div>
+
+
+<th:block th:include="~{fragments/footer}"/>
 </body>
 </html>

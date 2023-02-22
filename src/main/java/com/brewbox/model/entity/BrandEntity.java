@@ -18,6 +18,9 @@ public class BrandEntity extends BaseEntity{
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(nullable = false)
+    private String imageUrl;
+
     @OneToMany(mappedBy = "brand", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ProductEntity> products;
 }

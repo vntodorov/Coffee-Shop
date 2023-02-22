@@ -37,6 +37,7 @@ public class UserRegisterDTO {
     private String email;
 
     @NotEmpty
+    @Size(min = 5, max = 20)
     @UniqueUsername
     private String username;
 

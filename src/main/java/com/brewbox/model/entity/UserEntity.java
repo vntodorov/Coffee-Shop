@@ -35,6 +35,9 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false)
     private String password;
 
+    @Column
+    private String imageUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

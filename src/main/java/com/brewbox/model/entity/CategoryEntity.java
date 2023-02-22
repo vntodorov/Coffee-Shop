@@ -4,10 +4,7 @@ import com.brewbox.model.entity.enums.CategoryEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -16,6 +13,6 @@ import javax.persistence.Table;
 public class CategoryEntity extends BaseEntity {
 
     @Column(nullable = false)
-    @Enumerated
-    private CategoryEnum category;
+    @Enumerated(EnumType.STRING)
+    private CategoryEnum name;
 }

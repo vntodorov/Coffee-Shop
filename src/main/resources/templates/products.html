@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Products</title>
+    <th:block th:include="~{fragments/head}"/>
 </head>
+
+<div th:replace="fragments/navbar">Navbar</div>
+
 <body>
 
+<div th:each="product: ${products}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+    <div class="card-img-top-wrapper">
+        <img class="card-img-top" th:src="${product.imageUrl}" alt="Product image">
+    </div>
+    <div class="card-body pb-1">
+        <h5 class="card-title"></h5>
+    </div>
+    <ul class="offer-details list-group list-group-flush">
+        <li class="list-group-item">
+            <div class="card-text"><span th:text="'Name: ' + ${product.name}"></span></div>
+            <div class="card-text"><span th:text="'Price: ' + ${product.price} + ' lv'"></span></div>
+            <div class="card-text"><span th:text="'Weight: ' + ${product.weight}"></span></div>
+            <div class="card-text"><span th:text="'Category: ' + ${product.category.name}"></span></div>
+            <div class="card-text"><span th:text="'Brand: ' + ${product.brand.name}"></span></div>
+        </li>
+    </ul>
+    <div class="card-body">
+        <a class="card-link" href="/">Details</a>
+        <a class="card-link" href="/">Add to Basket</a>
+    </div>
+</div>
+</div>
+
+
+<th:block th:include="~{fragments/footer}"/>
 </body>
 </html>
