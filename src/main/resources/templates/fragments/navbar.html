@@ -31,6 +31,10 @@
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')"  href="/brands/add">Add Brand</a>
                         <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/add">Add Admin</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/add">Add Moderator</a>
+                        <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/remove">Remove Admin</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/remove">Remove Moderator</a>
                     </div>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">

@@ -48,4 +48,8 @@ public class UserEntity extends BaseEntity{
     public void addRole(UserRoleEntity role){
         roles.add(role);
     }
+
+    public void removeRole(UserRoleEntity role){
+        roles.remove(role);
+    }
 }

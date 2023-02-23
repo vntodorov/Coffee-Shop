@@ -30,7 +30,15 @@ public class BrandService {
                 toList();
     }
 
+    public void addBrand(BrandDTO brandDTO) {
+        brandRepository.save(mapToBrand(brandDTO));
+    }
+
     private BrandDTO mapToBrandDTO(BrandEntity brand) {
         return mapper.map(brand, BrandDTO.class);
+    }
+
+    private BrandEntity mapToBrand(BrandDTO brandDTO){
+        return mapper.map(brandDTO, BrandEntity.class);
     }
 }
