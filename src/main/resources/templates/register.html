@@ -21,9 +21,9 @@
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label for="firstName" class="text-white font-weight-bold">Username</label>
+                <label for="username" class="text-white font-weight-bold">Username</label>
                 <input
-                        id="Username"
+                        id="username"
                         th:field="*{username}"
                         th:errorclass="is-invalid"
                         type="text"
@@ -124,9 +124,8 @@
     </form>
 </div>
 
-<div>
-    <footer></footer>
-</div>
+<th:block th:include="~{fragments/footer}"/>
+
 
 </body>
 </html>

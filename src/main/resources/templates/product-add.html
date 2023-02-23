@@ -1,10 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add Product</title>
+    <th:block th:include="~{fragments/head}"/>
 </head>
+
 <body>
 
+<div th:replace="fragments/navbar">Navbar</div>
+
+
+<div class="container">
+    <h2 class="text-center text-white">Add a Product</h2>
+    <form th:action="@{/products/add}"
+          th:method="post"
+          th:object="${productDTO}"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="name" class="text-white font-weight-bold">Name</label>
+                <input
+                        id="name"
+                        th:field="*{name}"
+                        th:errorclass="is-invalid"
+                        type="text"
+                        class="form-control"
+                        placeholder="name"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Name is required and should be between 2 and 20 symbols.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="description" class="text-white font-weight-bold">Description</label>
+                <textarea
+                        id="description"
+                        th:field="*{description}"
+                        th:errorclass="is-invalid"
+                        type="textarea"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Description"></textarea>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Description is required and should be at least 5 symbols.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="price" class="text-white font-weight-bold">Price</label>
+                <input
+                        id="price"
+                        th:field="*{price}"
+                        th:errorclass="is-invalid"
+                        type="number"
+                        class="form-control"
+                        placeholder="Price"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Price is required and should be positive.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="weight" class="text-white font-weight-bold">Weight</label>
+                <input id="weight"
+                       th:field="*{weight}"
+                       th:errorclass="is-invalid"
+                       type="number"
+                       class="form-control"
+                       placeholder="Weight"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Weight is required and should be positive.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="categoryName" class="text-white font-weight-bold">Category</label>
+                <select id="categoryName"
+                        th:name="categoryName"
+                        th:errorclass="is-invalid"
+                        class="form-control">
+                    <option value="">- Select Category -</option>
+                    <option th:each="c : ${T(com.brewbox.model.entity.enums.CategoryEnum).values()}"
+                            th:text="${c}"
+                            th:value="${c}"
+                            th:selected="${c} == *{categoryName}">
+                        Category
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Category is required.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="brandName" class="text-white font-weight-bold">Brand</label>
+                <select id="brandName"
+                        th:name="brandName"
+                        th:errorclass="is-invalid"
+                        class="form-control">
+                    <option value="">- Select Brand -</option>
+                    <option
+                            th:each="brand : ${brands}"
+                            th:text="${brand.name}"
+                            th:value="${brand.name}"
+                            th:selected="*{brandName} == ${brand.name}">Brand
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Brand is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="imageUrl" class="text-white font-weight-bold">Image Url</label>
+            <input id="imageUrl"
+                   th:field="*{imageUrl}"
+                   th:errorclass="is-invalid"
+                   type="text"
+                   class="form-control"
+                   placeholder="Image Url"/>
+            <p class="invalid-feedback errors alert alert-danger">
+                Image Url is required.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Add Product"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<th:block th:include="~{fragments/footer}"/>
 </body>
 </html>

@@ -1,11 +1,10 @@
 package com.brewbox.model.DTOs;
 
+import com.brewbox.model.entity.enums.CategoryEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,9 +14,11 @@ import java.util.List;
 public class ProductDTO {
 
     @NotBlank
+    @Size(min = 2, max = 20)
     private String name;
 
     @NotBlank
+    @Size(min = 5)
     private String description;
 
     @NotNull
@@ -31,10 +32,10 @@ public class ProductDTO {
     private LocalDate added = LocalDate.now();
 
     @NotNull
-    private CategoryDTO category;
+    private CategoryEnum categoryName;
 
-    @NotNull
-    private BrandDTO brand;
+    @NotBlank
+    private String brandName;
 
     @NotBlank
     private String imageUrl;

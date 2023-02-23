@@ -41,4 +41,12 @@ public class BrandService {
     private BrandEntity mapToBrand(BrandDTO brandDTO){
         return mapper.map(brandDTO, BrandEntity.class);
     }
+
+    public BrandEntity findBrandById(Long id) {
+        return brandRepository.findById(id).orElseThrow();
+    }
+
+    public BrandEntity findBrandByName(String brandName) {
+        return brandRepository.findByName(brandName).orElseThrow();
+    }
 }

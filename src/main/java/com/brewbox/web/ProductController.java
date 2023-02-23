@@ -1,6 +1,7 @@
 package com.brewbox.web;
 
 import com.brewbox.model.DTOs.ProductDTO;
+import com.brewbox.service.BrandService;
 import com.brewbox.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,12 @@ public class ProductController {
 
     private final ProductService productService;
 
+    private final BrandService brandService;
+
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, BrandService brandService) {
         this.productService = productService;
+        this.brandService = brandService;
     }
 
     @ModelAttribute("productDTO")
@@ -37,7 +41,8 @@ public class ProductController {
     }
 
     @GetMapping("/add")
-    public String addProduct(){
+    public String addProduct(Model model){
+        model.addAttribute("brands", brandService.getAllBrands());
         return "product-add";
     }
 
