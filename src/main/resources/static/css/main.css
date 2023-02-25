@@ -12,6 +12,16 @@ body {
      padding-right: 100px;
 }
 
+.c-item{
+    height: 600px;
+}
+
+.c-img{
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.6);
+}
+
 .navbar-light .navbar-nav .nav-link {
     color: rgb(96 44 12);
 }

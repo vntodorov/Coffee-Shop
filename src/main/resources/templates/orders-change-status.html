@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title>Change Order Status</title>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+
+<body>
+
+<div th:replace="fragments/navbar">Navbar</div>
+
+<main>
+    <div class="container bg-blur rounded mt-1 mb-4">
+        <div class="row mt-1 mb-2">
+            <div class="col-6 mt-1 mb-1">
+                <div>
+                    <h3 class="mySticky bg-gray text-dark  mb-0 mt-2">All Orders</h3>
+                    <div class="bg-dark rounded m-auto" style="height: 31vh; overflow: auto">
+                        <table th:each="order : ${orders}" class="table table-striped table-dark">
+                            <tr>
+                                <td class="bg-info" scope="row" style="width: 5%">
+                                    <img class="mr-2 " src="/images/order-icon.png" alt="Order-icon" width="35px"
+                                         height="35px">
+                                </td>
+                                <td style="width: 5%" class="bg-info">
+                                    <th:block th:text="${order.id}"></th:block>
+                                </td>
+                                <td class="bg-primary" style="width: 15%">
+                                    <th:block th:text="${user.firstName}"></th:block>
+                                    €
+                                </td>
+                                <td>
+                                    <th:block th:text="${user.username}"></th:block>
+                                </td>
+                                <td style="width: 15%"><a class="btn-danger btn"
+                                                          th:href="@{/admins/add/{id}(id = ${user.id})}">Add Admin</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<th:block th:include="~{fragments/footer}"/>
+</body>
+</html>

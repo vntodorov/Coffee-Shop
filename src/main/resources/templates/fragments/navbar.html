@@ -29,6 +29,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/products/add">Add Product</a>
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')"  href="/brands/add">Add Brand</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/orders/change-status">Change Order Status</a>
                         <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/add">Add Admin</a>
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/add">Add Moderator</a>
