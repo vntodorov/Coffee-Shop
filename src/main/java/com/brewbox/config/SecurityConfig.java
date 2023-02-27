@@ -27,6 +27,7 @@ public class SecurityConfig {
                     authorizeRequests().
                     requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                     antMatchers("/", "/users/login", "/users/register").permitAll().
+                    antMatchers("/cart").authenticated().
                     antMatchers("/brands/**").permitAll().
                     antMatchers("/products/**").permitAll().
                     antMatchers("/maintenance").permitAll().

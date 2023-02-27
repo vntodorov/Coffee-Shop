@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <th:block th:include="~{fragments/head}"/>
+</head>
+
+<body>
+
+<div th:replace="fragments/navbar">Navbar</div>
+
+<div>
+    <hr2>Your Shopping Cart:</hr2>
+    </br>
+</div>
+
+<div class="row m-1">
+    <div class="col-sm-8">
+        <th:block th:each="cartItem : ${cartItems}">
+            <div class="row border rounded">
+                <div class="col-1">
+                    <div>[[${cartItem.quantity}]]</div>
+                    <div><a class="icon-trash" th:href="@{/}"></a></div>
+                </div>
+                <div class="col-3">
+                    <img th:src="@{${cartItem.product.imageUrl}}" class="img-fluid"/>
+                </div>
+                <div class="col-6">
+                    <div>
+                        <a th:href="@{/product/{id}(id = ${cartItem.product.id})}">
+                            <b>[[${cartItem.product.name}]]</b>
+                        </a>
+                    </div>
+                    <div th:replace="quantity-control :: quantity-control(${cartItem.quantity}, ${cartItem.product.id})">Quantity</div>
+                    <div>
+                        <span>X</span>
+                        <span>[[${cartItem.product.price}]]</span>
+                    </div>
+                    <div>
+                        <span>=</span><span class="h4">[Subtotal]]</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row m-1">&nbsp;</div>
+        </th:block>
+    </div>
+
+    <div class="col sm-4" th:unless="${#lists.isEmpty(cartItems)}">
+        <div>
+            <span class="h3">Estimated Total:</span>
+        </div>
+        <div class="mt-2">
+            <span class="h2">[Total Amount]</span>
+        </div>
+        <div class="mt-2">
+            <button class="btn btn-danger p-3 mt-2">Check Out</button>
+        </div>
+    </div>
+</div>
+
+<div th:if="${#lists.isEmpty(cartItems)}">
+    <h3>You have not chosen any products yet.</h3>
+</div>
+
+
+<th:block th:include="~{fragments/footer}"/>
+
+</body>
+</html>

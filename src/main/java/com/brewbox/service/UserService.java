@@ -51,6 +51,11 @@ public class UserService {
 
     }
 
+    public UserEntity getCurrentUser(UserDetails userDetails){
+        return userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+
+    }
+
     private void login(String registerAttribute) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(registerAttribute);
 

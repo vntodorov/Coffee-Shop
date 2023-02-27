@@ -28,36 +28,48 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/products/add">Add Product</a>
-                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')"  href="/brands/add">Add Brand</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/brands/add">Add Brand</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/orders/change-status">Change Order Status</a>
                         <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/add">Add Admin</a>
-                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/add">Add Moderator</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/add">Add
+                            Moderator</a>
                         <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/remove">Remove Admin</a>
-                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/remove">Remove Moderator</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/remove">Remove
+                            Moderator</a>
                     </div>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()">
-                    <div class="form-inline my-2 my-lg-0 border px-3">
-                    <div class="logged-user">Welcome, <th:block th:text="${#authentication.principal.fullName}">X</th:block>!</div>
-                        <form th:action="@{users/logout}"
-                              th:method="post">
-                            <input class="btn btn-link nav-link" type="submit" value="Logout">
-                        </form>
-                    </div>
-                </li>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/cart}">My Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="form-inline my-2 my-lg-0 border px-3">
+                            <div class="logged-user">Welcome,
+                                <th:block th:text="${#authentication.principal.fullName}">X</th:block>
+                                !
+                            </div>
+                            <form th:action="@{users/logout}"
+                                  th:method="post">
+                                <input class="btn btn-link nav-link" type="submit" value="Logout">
+                            </form>
+                        </div>
+                    </li>
+                </th:block>
 
                 <th:block sec:authorize="!isAuthenticated()">
-                <li class="nav-item">
-                    <a class="nav-link"
-                       th:href="@{/users/register}">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users/login}">Login</a>
-                </li>
-               </th:block>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/users/register}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           th:href="@{/users/login}">Login</a>
+                    </li>
+                </th:block>
             </ul>
         </div>
     </nav>

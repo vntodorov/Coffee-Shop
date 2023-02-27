@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 public class ProductDTO {
 
+    private Long id;
+
     @NotBlank
     @Size(min = 2, max = 20)
     private String name;
