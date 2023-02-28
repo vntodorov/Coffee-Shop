@@ -29,7 +29,6 @@
         <div>
             <span>Price: [[${product.price}]]</span>
         </div>
-        <div>&nbsp;</div>
         <div th:utext="${product.description}">
         </div>
     </div>
@@ -39,29 +38,8 @@
 
         <div>
             <button class="btn btn-primary" id="buttonAdd2Cart">Add to Cart</button>
-
-            <div class="modal fade text-center" id="myModal">
-
-                <div class="modal-dialog">
-
-                    <div class="modal-content">
-
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modalTitle">Warning</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-
-                        <div class="modal-body">
-                            <span id="modalBody"></span>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
     </div>
 </div>
 
@@ -70,86 +48,46 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <form>
+                <form th:action="@{/comment/add}"
+                      th:method="post"
+                      th:object="${commentDTO}">
                     <h3 class="pull-left">New Comment</h3>
-                    <button type="submit" class="btn btn-normal pull-right">Submit</button>
                     <fieldset>
                         <div class="row">
                             <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                                <textarea class="form-control"
+                                          id="message"
+                                          th:field="*{text}"
+                                          th:errorclass="is-invalid"
+                                          placeholder="Your comment"></textarea>
+                                <p class="invalid-feedback errors alert alert-danger">
+                                    Write your comment.
+                                </p>
+                                <input type="submit" class="btn btn-info btn-lg" value="Submit"/>
+
                             </div>
                         </div>
                     </fieldset>
                 </form>
 
-                <h3>4 Comments</h3>
-
-                <!-- COMMENT 1 - START -->
-                <div class="media">
-                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
+                <h3><th:block th:text="${#lists.size(comments)}"></th:block> Comments</h3>
+                <!-- COMMENT - START -->
+                <div class="media" th:each="comment: ${comments}">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="/images/user-icon.png" alt=""></a>
                     <div class="media-body">
-                        <h4 class="media-heading">John Doe</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <h4 class="media-heading">[[${comment.user.username}]]</h4>
+                        <p>[[${comment.text}]]</p>
                         <ul class="list-unstyled list-inline media-detail pull-left">
-                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
+                            <li><i class="fa fa-calendar"></i>[[${comment.date}]]</li>
                         </ul>
                     </div>
                 </div>
-                <!-- COMMENT 1 - END -->
-
-                <!-- COMMENT 2 - START -->
-                <div class="media">
-                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""></a>
-                    <div class="media-body">
-                        <h4 class="media-heading">John Doe</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <ul class="list-unstyled list-inline media-detail pull-left">
-                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- COMMENT 2 - END -->
-
-                <!-- COMMENT 3 - START -->
-                <div class="media">
-                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></a>
-                    <div class="media-body">
-                        <h4 class="media-heading">John Doe</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <ul class="list-unstyled list-inline media-detail pull-left">
-                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- COMMENT 3 - END -->
-
-                <!-- COMMENT 4 - START -->
-                <div class="media">
-                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt=""></a>
-                    <div class="media-body">
-                        <h4 class="media-heading">John Doe</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <ul class="list-unstyled list-inline media-detail pull-left">
-                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- COMMENT 4 - END -->
-
+                <!-- COMMENT - END -->
             </div>
         </div>
     </div>
 </section>
-
-
-<script type="text/javascript">
-    contextPath = "[[@{/}]]";
-    var csrfHeaderName = "[[${_csrf.headerName}]]"
-    var csrfValue = "[[${_csrf.token}]]";
-    var productId = [[${product.id}]]
-
-</script>
-
 
 <th:block th:include="~{fragments/footer}"/>
 

@@ -1,6 +1,8 @@
 package com.brewbox.web;
 
+import com.brewbox.model.DTOs.CommentDTO;
 import com.brewbox.model.DTOs.ProductDTO;
+import com.brewbox.model.entity.CommentEntity;
 import com.brewbox.service.BrandService;
 import com.brewbox.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -26,18 +29,23 @@ public class ProductController {
     }
 
     @ModelAttribute("productDTO")
-    public ProductDTO productDTO(){
+    public ProductDTO productDTO() {
         return new ProductDTO();
     }
 
+    @ModelAttribute("commentDTO")
+    public CommentDTO commentDTO() {
+        return new CommentDTO();
+    }
+
     @GetMapping("/products")
-    public String getAllProducts(Model model){
+    public String getAllProducts(Model model) {
         model.addAttribute("products", productService.getAllProducts());
         return "products";
     }
 
     @GetMapping("/products/add")
-    public String addProduct(Model model){
+    public String addProduct(Model model) {
         model.addAttribute("brands", brandService.getAllBrands());
         return "product-add";
     }
@@ -45,9 +53,9 @@ public class ProductController {
     @PostMapping("/products/add")
     public String addProduct(@Valid ProductDTO productDTO,
                              BindingResult bindingResult,
-                             RedirectAttributes redirectAttributes){
+                             RedirectAttributes redirectAttributes) {
 
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("productDTO", productDTO);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.productDTO", bindingResult);
 
@@ -60,9 +68,10 @@ public class ProductController {
     }
 
     @GetMapping("/product/{id}")
-    public String getProductById(@PathVariable Long id, Model model){
+    public String getProductById(@PathVariable Long id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
-        return "product";
+        model.addAttribute("comments", productService.getAllComments(id));
 
+        return "product";
     }
 }
