@@ -56,4 +56,11 @@ public class ProductService {
     private ProductEntity mapToProduct(ProductDTO productDTO) {
         return mapper.map(productDTO, ProductEntity.class);
     }
+
+    public ProductDTO getProductById(Long id) {
+        return productRepository.
+                findById(id).
+                map(this::mapToProductDTO).
+                orElseThrow();
+    }
 }

@@ -10,7 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -57,6 +59,14 @@ public class ShoppingCartService {
         cartItemRepository.save(cartItem);
 
         return addedQuantity;
+    }
+
+    @Transactional
+    public BigDecimal updateQuantity(Long productId, int quantity, UserEntity user){
+        cartItemRepository.updateQuantity(quantity, productId, user.getId());
+        ProductEntity product = productRepository.findById(productId).orElseThrow();
+
+        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
     }
 
     private CartItemDTO mapToCartItemDTO(CartItemEntity cartItem) {

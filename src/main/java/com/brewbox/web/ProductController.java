@@ -7,16 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/products")
 public class ProductController {
 
     private final ProductService productService;
@@ -34,19 +30,19 @@ public class ProductController {
         return new ProductDTO();
     }
 
-    @GetMapping
+    @GetMapping("/products")
     public String getAllProducts(Model model){
         model.addAttribute("products", productService.getAllProducts());
         return "products";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/products/add")
     public String addProduct(Model model){
         model.addAttribute("brands", brandService.getAllBrands());
         return "product-add";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/products/add")
     public String addProduct(@Valid ProductDTO productDTO,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes){
@@ -60,6 +56,13 @@ public class ProductController {
 
         productService.addProduct(productDTO);
         return "redirect:/products";
+
+    }
+
+    @GetMapping("/product/{id}")
+    public String getProductById(@PathVariable Long id, Model model){
+        model.addAttribute("product", productService.getProductById(id));
+        return "product";
 
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Title</title>
+    <title>Cart</title>
     <th:block th:include="~{fragments/head}"/>
 </head>
 
@@ -32,17 +32,27 @@
                             <b>[[${cartItem.product.name}]]</b>
                         </a>
                     </div>
-                    <div th:replace="quantity-control :: quantity-control(${cartItem.quantity}, ${cartItem.product.id})">Quantity</div>
-                    <div>
-                        <span>X</span>
-                        <span>[[${cartItem.product.price}]]</span>
+                    <div th:replace="quantity-control :: quantity-control(${cartItem.quantity}, ${cartItem.product.id})">
+                        Quantity
                     </div>
                     <div>
-                        <span>=</span><span class="h4">[Subtotal]]</span>
+                        <span>X</span>
+                        <span>[[${cartItem.product.price}]]лв.</span>
+                    </div>
+                    <div>
+                        <span>=&nbsp;</span><span class="h4 productSubtotal">[[${cartItem.getSubtotal()}]]</span><span
+                            class="h4">лв.</span>
                     </div>
                 </div>
             </div>
             <div class="row m-1">&nbsp;</div>
+            <script type="text/javascript">
+                contextPath = "[[@{/}]]";
+                var csrfHeaderName = "[[${_csrf.headerName}]]"
+                var csrfValue = "[[${_csrf.token}]]";
+                var productId = [[${cartItem.product.id}]]
+
+            </script>
         </th:block>
     </div>
 
@@ -51,7 +61,7 @@
             <span class="h3">Estimated Total:</span>
         </div>
         <div class="mt-2">
-            <span class="h2">[Total Amount]</span>
+            <span class="h2" id="totalAmount"></span>
         </div>
         <div class="mt-2">
             <button class="btn btn-danger p-3 mt-2">Check Out</button>

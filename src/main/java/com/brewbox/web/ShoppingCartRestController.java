@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 @RestController
 public class ShoppingCartRestController {
 
@@ -25,11 +27,25 @@ public class ShoppingCartRestController {
 
     @PostMapping("/cart/add/{pid}/{qty}")
     public String addProductToCart(@PathVariable("pid") Long productId,
-                                   @PathVariable("qty") Long quantity,
+                                   @PathVariable("qty") int quantity,
                                    @AuthenticationPrincipal UserDetails userDetails){
 
         UserEntity user = userService.getCurrentUser(userDetails);
 
-        return null;
+        Integer addedQuantity = shoppingCartService.addProduct(productId, quantity, user);
+
+        return addedQuantity + " item(s) of this product were added to your shopping cart.";
+    }
+
+    @PostMapping("/cart/update/{pid}/{qty}")
+    public String updateQuantity(@PathVariable("pid") Long productId,
+                                   @PathVariable("qty") int quantity,
+                                   @AuthenticationPrincipal UserDetails userDetails){
+
+        UserEntity user = userService.getCurrentUser(userDetails);
+
+        BigDecimal subtotal = shoppingCartService.updateQuantity(productId, quantity, user);
+
+        return String.valueOf(subtotal);
     }
 }

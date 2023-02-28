@@ -2,18 +2,153 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product</title>
+    <th:block th:include="~{fragments/head}"/>
 </head>
+
+<div th:replace="fragments/navbar">Navbar</div>
+
 <body>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm text-center">
+            <div style="width: 460px; height: 500px">
+                <img id="bigImage" th:src="@{${product.imageUrl}}" index="0" class="img-fluid">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm">
+        <div>
+            <h2>[[${product.name}]]</h2>
+        </div>
+        <div>
+            <span>Brand: [[${product.brandName}]]</span>
+        </div>
+        <div>
+            <span>Price: [[${product.price}]]</span>
+        </div>
+        <div>&nbsp;</div>
+        <div th:utext="${product.description}">
+        </div>
+    </div>
+
+    <div class="col-sm-2">
+        <div th:replace="quantity-control :: quantity-control(1, ${product.id})">Quantity</div>
+
+        <div>
+            <button class="btn btn-primary" id="buttonAdd2Cart">Add to Cart</button>
+
+            <div class="modal fade text-center" id="myModal">
+
+                <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modalTitle">Warning</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <div class="modal-body">
+                            <span id="modalBody"></span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<section class="content-item" id="comments">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <form>
+                    <h3 class="pull-left">New Comment</h3>
+                    <button type="submit" class="btn btn-normal pull-right">Submit</button>
+                    <fieldset>
+                        <div class="row">
+                            <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <h3>4 Comments</h3>
+
+                <!-- COMMENT 1 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- COMMENT 1 - END -->
+
+                <!-- COMMENT 2 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- COMMENT 2 - END -->
+
+                <!-- COMMENT 3 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- COMMENT 3 - END -->
+
+                <!-- COMMENT 4 - START -->
+                <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- COMMENT 4 - END -->
+
+            </div>
+        </div>
+    </div>
+</section>
 
 
+<script type="text/javascript">
+    contextPath = "[[@{/}]]";
+    var csrfHeaderName = "[[${_csrf.headerName}]]"
+    var csrfValue = "[[${_csrf.token}]]";
+    var productId = [[${product.id}]]
 
-
-
-
-
-
+</script>
 
 
 <th:block th:include="~{fragments/footer}"/>
