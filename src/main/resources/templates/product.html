@@ -10,37 +10,39 @@
 <div th:replace="fragments/navbar">Navbar</div>
 
 <body>
-<div class="container-fluid">
-
+<div class="container-fluid mt-5">
     <div class="row">
-        <div class="col-sm text-center">
+        <div class="col-md-5">
             <div style="width: 460px; height: 500px">
                 <img id="bigImage" th:src="@{${product.imageUrl}}" index="0" class="img-fluid">
             </div>
         </div>
-    </div>
-
-    <div class="col-sm">
-        <div>
-            <h2>[[${product.name}]]</h2>
+        <div class="col-md-7">
+            <h4>[[${product.name}]]</h4>
+            <div class="price">
+                <span class="mr-2">[[${product.price}]]лв./бр.</span>
+            </div>
+            <div class="d-flex align-items-center mt-4 offers mb-1"><i class="fa fa-check-square-o mt-1"></i>
+                <span class="ml-1 font-weight-bold">Brand: </span>
+                <span class="ml-1">[[${product.brandName}]]<br> </span>
+            </div>
+            <div class="d-flex align-items-center mt-4 offers mb-1"><i class="fa fa-check-square-o mt-1"></i>
+                <span class="ml-1 font-weight-bold">Category: </span>
+                <span class="ml-1">[[${product.categoryName}]]<br> </span>
+            </div>
+            <div class="d-flex align-items-center mt-4 offers mb-1"><i class="fa fa-check-square-o mt-1"></i>
+                <span class="ml-1 font-weight-bold">Weight: </span>
+                <span class="ml-1">[[${product.weight}]]<br> </span>
+            </div>
+            <div class="d-flex align-items-center mt-5 delivery">
+                <span class="ml-2">Delivering<br></span>
+                <span class="ml-2 mr-2">|<br></span><span class="ml-2 mr-2 text-success">FREE<br></span>
+            </div>
+            <hr>
+            <div class="mt-3">
+                <button class="btn btn-dark mr-2" type="button">ADD TO CART</button>
+            </div>
         </div>
-        <div>
-            <span>Brand: [[${product.brandName}]]</span>
-        </div>
-        <div>
-            <span>Price: [[${product.price}]]</span>
-        </div>
-        <div th:utext="${product.description}">
-        </div>
-    </div>
-
-    <div class="col-sm-2">
-        <div th:replace="quantity-control :: quantity-control(1, ${product.id})">Quantity</div>
-
-        <div>
-            <button class="btn btn-primary" id="buttonAdd2Cart">Add to Cart</button>
-        </div>
-
     </div>
 </div>
 
@@ -87,7 +89,9 @@
                         </ul>
                         <ul class="list-unstyled list-inline media-detail pull-right"
                             sec:authorize="hasRole('ADMIN') || hasRole('MODERATOR')">
-                            <li class=""><a th:href="@{/comment/delete/{cid}/product/{pid}(cid = ${comment.id}, pid = ${product.id})}">Delete</a></li>
+                            <li class=""><a
+                                    th:href="@{/comment/delete/{cid}/product/{pid}(cid = ${comment.id}, pid = ${product.id})}">Delete</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
