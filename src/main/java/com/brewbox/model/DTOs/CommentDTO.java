@@ -11,16 +11,15 @@ import java.time.LocalDate;
 @Setter
 public class CommentDTO {
 
+    private Long id;
+
     @NotBlank
     private String text;
 
-    @NotNull
     private ProductDTO product;
 
-    @NotNull
     private UserDTO user;
 
-    @NotNull
     private LocalDate date;
 
 }

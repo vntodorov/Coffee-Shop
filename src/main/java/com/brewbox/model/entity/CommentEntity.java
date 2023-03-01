@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "comments")
-public class CommentEntity extends BaseEntity{
+public class CommentEntity extends BaseEntity {
 
     @Column(columnDefinition = "TEXT")
     private String text;
@@ -24,5 +24,5 @@ public class CommentEntity extends BaseEntity{
     @ManyToOne
     private UserEntity user;
 
-    private LocalDate date;
+    private final LocalDate date = LocalDate.now();
 }

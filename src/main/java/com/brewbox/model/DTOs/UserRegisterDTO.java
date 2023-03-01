@@ -24,7 +24,6 @@ public class UserRegisterDTO {
     @Size(min = 2, max = 20)
     private String firstName;
 
-    @Size(min = 2, max = 20)
     private String middleName;
 
     @NotEmpty

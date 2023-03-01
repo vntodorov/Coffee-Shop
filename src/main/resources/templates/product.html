@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Product</title>
     <th:block th:include="~{fragments/head}"/>
@@ -48,7 +49,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <form th:action="@{/comment/add}"
+                <form th:action="@{/comment/add/product/{pid}(pid = ${product.id})}"
                       th:method="post"
                       th:object="${commentDTO}">
                     <h3 class="pull-left">New Comment</h3>
@@ -70,16 +71,23 @@
                     </fieldset>
                 </form>
 
-                <h3><th:block th:text="${#lists.size(comments)}"></th:block> Comments</h3>
+                <h3>
+                    <th:block th:text="${#lists.size(comments)}"></th:block>
+                    Comments
+                </h3>
                 <!-- COMMENT - START -->
                 <div class="media" th:each="comment: ${comments}">
-                    <a class="pull-left" href="#">
+                    <a class="pull-left">
                         <img class="media-object" src="/images/user-icon.png" alt=""></a>
                     <div class="media-body">
                         <h4 class="media-heading">[[${comment.user.username}]]</h4>
                         <p>[[${comment.text}]]</p>
                         <ul class="list-unstyled list-inline media-detail pull-left">
                             <li><i class="fa fa-calendar"></i>[[${comment.date}]]</li>
+                        </ul>
+                        <ul class="list-unstyled list-inline media-detail pull-right"
+                            sec:authorize="hasRole('ADMIN') || hasRole('MODERATOR')">
+                            <li class=""><a th:href="@{/comment/delete/{cid}/product/{pid}(cid = ${comment.id}, pid = ${product.id})}">Delete</a></li>
                         </ul>
                     </div>
                 </div>

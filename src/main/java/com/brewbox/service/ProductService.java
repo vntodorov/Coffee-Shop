@@ -68,13 +68,4 @@ public class ProductService {
                 map(this::mapToProductDTO).
                 orElseThrow();
     }
-
-    public List<CommentDTO> getAllComments(Long id) {
-        return commentRepository.
-                findByProductId(id).
-                get().
-                stream().
-                map(c -> mapper.map(c, CommentDTO.class)).
-                toList();
-    }
 }
