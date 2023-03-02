@@ -12,10 +12,8 @@ import java.math.BigDecimal;
 @Setter
 public class CartItemDTO {
 
-    @NotNull
     private UserDTO user;
 
-    @NotNull
     private ProductDTO product;
 
     @NotNull

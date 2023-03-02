@@ -5,29 +5,32 @@ import com.brewbox.model.entity.CartItemEntity;
 import com.brewbox.model.entity.ProductEntity;
 import com.brewbox.model.entity.UserEntity;
 import com.brewbox.repository.CartItemRepository;
-import com.brewbox.repository.ProductRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartService {
 
     private final CartItemRepository cartItemRepository;
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
+
+    private final UserService userService;
 
     private final ModelMapper mapper;
 
     @Autowired
-    public ShoppingCartService(CartItemRepository cartItemRepository, ProductRepository productRepository, ModelMapper mapper) {
+    public ShoppingCartService(CartItemRepository cartItemRepository, ProductService productService, UserService userService, ModelMapper mapper) {
         this.cartItemRepository = cartItemRepository;
-        this.productRepository = productRepository;
+        this.productService = productService;
+        this.userService = userService;
         this.mapper = mapper;
     }
 
@@ -39,37 +42,43 @@ public class ShoppingCartService {
                 toList();
     }
 
-    public Integer addProduct(long productId, int quantity, UserEntity user) {
-        int addedQuantity = quantity;
+    public boolean addProduct(CartItemDTO cartItemDTO, Long productId, UserDetails userDetails) {
+        UserEntity user = userService.getCurrentUser(userDetails);
+        ProductEntity product = mapper.map(productService.getProductById(productId), ProductEntity.class);
 
-        ProductEntity product = productRepository.findById(productId).orElseThrow();
+        Optional<CartItemEntity> optionalCartItem = cartItemRepository.findByUserAndProduct(user, product);
 
-        CartItemEntity cartItem = cartItemRepository.findByUserAndProduct(user, product);
+        CartItemEntity cartItem;
 
-        if (cartItem != null) {
-            addedQuantity = cartItem.getQuantity() + quantity;
-            cartItem.setQuantity(addedQuantity);
+        if (optionalCartItem.isPresent()) {
+            cartItem = optionalCartItem.get();
+            int newQuantity = cartItem.getQuantity() + cartItemDTO.getQuantity();
+            if (newQuantity > 9) {
+                return false;
+            }
+            cartItem.setQuantity(newQuantity);
         } else {
-            cartItem = new CartItemEntity();
-            cartItem.setQuantity(quantity);
+            cartItem = mapToCartItem(cartItemDTO);
             cartItem.setUser(user);
             cartItem.setProduct(product);
         }
-
         cartItemRepository.save(cartItem);
-
-        return addedQuantity;
+        return true;
     }
 
-    @Transactional
-    public BigDecimal updateQuantity(Long productId, int quantity, UserEntity user){
-        cartItemRepository.updateQuantity(quantity, productId, user.getId());
-        ProductEntity product = productRepository.findById(productId).orElseThrow();
-
-        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
-    }
+//    @Transactional
+//    public BigDecimal updateQuantity(Long productId, int quantity, UserEntity user) {
+//        cartItemRepository.updateQuantity(quantity, productId, user.getId());
+//        ProductEntity product = productRepository.findById(productId).orElseThrow();
+//
+//        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
+//    }
 
     private CartItemDTO mapToCartItemDTO(CartItemEntity cartItem) {
         return mapper.map(cartItem, CartItemDTO.class);
+    }
+
+    private CartItemEntity mapToCartItem(CartItemDTO cartItemDTO) {
+        return mapper.map(cartItemDTO, CartItemEntity.class);
     }
 }

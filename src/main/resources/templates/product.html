@@ -39,9 +39,29 @@
                 <span class="ml-2 mr-2">|<br></span><span class="ml-2 mr-2 text-success">FREE<br></span>
             </div>
             <hr>
-            <div class="mt-3">
-                <button class="btn btn-dark mr-2" type="button">ADD TO CART</button>
-            </div>
+            <form th:action="@{/cart/add/product/{pid}(pid = ${product.id})}"
+                  th:method="post"
+                  th:object="${cartItemDTO}"
+                  class="col-sm">
+                <label class="my-1 mr-2" for="quantity">Choose quantity:</label>
+                <select
+                        th:field="*{quantity}"
+                        class="custom-select my-1 mr-sm-2"
+                        id="quantity">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <p th:if="${unsuccessful}" class="rounded  pl-3 text-danger">
+                     You can't order more than 9!
+                </p>
+                <p th:if="${successful}" class="rounded  pl-3 text-success">
+                    Successfully added to the cart!
+                </p>
+                <div class="mt-3">
+                    <input class="btn btn-dark mr-2" type="submit" value="ADD TO CART"/>
+                </div>
+            </form>
         </div>
     </div>
 </div>

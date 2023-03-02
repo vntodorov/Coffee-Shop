@@ -20,6 +20,7 @@
         <th:block th:each="cartItem : ${cartItems}">
             <div class="row border rounded">
                 <div class="col-1">
+                    <div>Quantity:</div>
                     <div>[[${cartItem.quantity}]]</div>
                     <div><a class="icon-trash" th:href="@{/}"></a></div>
                 </div>

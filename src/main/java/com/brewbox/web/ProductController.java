@@ -1,5 +1,6 @@
 package com.brewbox.web;
 
+import com.brewbox.model.DTOs.CartItemDTO;
 import com.brewbox.model.DTOs.CommentDTO;
 import com.brewbox.model.DTOs.ProductDTO;
 import com.brewbox.service.BrandService;
@@ -40,6 +41,11 @@ public class ProductController {
     @ModelAttribute("commentDTO")
     public CommentDTO commentDTO() {
         return new CommentDTO();
+    }
+
+    @ModelAttribute("cartItemDTO")
+    public CartItemDTO cartItemDTO() {
+        return new CartItemDTO();
     }
 
     @GetMapping("/products")
