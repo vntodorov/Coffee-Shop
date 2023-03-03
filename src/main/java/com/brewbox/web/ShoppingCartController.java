@@ -1,5 +1,6 @@
 package com.brewbox.web;
 
+import com.brewbox.model.DTOs.AddOrderDTO;
 import com.brewbox.model.DTOs.CartItemDTO;
 import com.brewbox.model.entity.UserEntity;
 import com.brewbox.service.ShoppingCartService;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping("/cart")
 public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
@@ -33,7 +35,12 @@ public class ShoppingCartController {
         return new CartItemDTO();
     }
 
-    @GetMapping("/cart")
+    @ModelAttribute("addOrderDTO")
+    public AddOrderDTO addOrderDTO() {
+        return new AddOrderDTO();
+    }
+
+    @GetMapping
     public String showShoppingCart(Model model,
                                    @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -43,7 +50,7 @@ public class ShoppingCartController {
         return "shopping-cart";
     }
 
-    @PostMapping("cart/add/product/{pid}")
+    @PostMapping("/add/product/{pid}")
     public String addProductToCart(@Valid CartItemDTO cartItemDTO,
                                    BindingResult bindingResult,
                                    RedirectAttributes redirectAttributes,
@@ -58,5 +65,29 @@ public class ShoppingCartController {
         }
 
         return "redirect:/product/{pid}";
+    }
+
+    @GetMapping("/delete/product/{pid}")
+    public String removeProductFromCart(@PathVariable("pid") Long pid,
+                                        @AuthenticationPrincipal UserDetails userDetails) {
+
+        shoppingCartService.removeProductFromCart(pid, userDetails);
+
+        return "redirect:/cart";
+
+
+    }
+
+    @GetMapping("/checkout")
+    public String invalidCartCheckout() {
+        return "redirect:/";
+    }
+
+    @PostMapping("/checkout")
+    public String cartCheckout(AddOrderDTO addOrderDTO,
+                               @AuthenticationPrincipal UserDetails userDetails) {
+
+        shoppingCartService.makeOrder(addOrderDTO, userDetails);
+        return "shopping-cart-checkout";
     }
 }

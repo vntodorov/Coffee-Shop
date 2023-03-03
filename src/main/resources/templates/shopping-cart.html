@@ -20,9 +20,9 @@
         <th:block th:each="cartItem : ${cartItems}">
             <div class="row border rounded">
                 <div class="col-1">
-                    <div>Quantity:</div>
-                    <div>[[${cartItem.quantity}]]</div>
-                    <div><a class="icon-trash" th:href="@{/}"></a></div>
+                    <li class=""><a
+                            th:href="@{/cart/delete/product/{pid}(pid = ${cartItem.product.id})}">Delete</a>
+                    </li>
                 </div>
                 <div class="col-3">
                     <img th:src="@{${cartItem.product.imageUrl}}" class="img-fluid"/>
@@ -33,9 +33,8 @@
                             <b>[[${cartItem.product.name}]]</b>
                         </a>
                     </div>
-                    <div th:replace="quantity-control :: quantity-control(${cartItem.quantity}, ${cartItem.product.id})">
-                        Quantity
-                    </div>
+                    <div>Quantity:</div>
+                    <div>[[${cartItem.quantity}]]</div>
                     <div>
                         <span>X</span>
                         <span>[[${cartItem.product.price}]]лв.</span>
@@ -53,6 +52,12 @@
                 var csrfValue = "[[${_csrf.token}]]";
                 var productId = [[${cartItem.product.id}]]
 
+
+
+
+
+
+
             </script>
         </th:block>
     </div>
@@ -64,9 +69,16 @@
         <div class="mt-2">
             <span class="h2" id="totalAmount"></span>
         </div>
-        <div class="mt-2">
-            <button class="btn btn-danger p-3 mt-2">Check Out</button>
-        </div>
+        <form th:action="@{/cart/checkout}"
+              th:method="post"
+              th:object="${addOrderDTO}"
+              class="mt-2">
+            <textarea class="form-control"
+                      id="message"
+                      th:field="*{additionalInformation}"
+                      placeholder="Anything additional to your order?"></textarea>
+            <input type="submit" class="btn btn-danger p-3 mt-2" value="Check Out"/>
+        </form>
     </div>
 </div>
 

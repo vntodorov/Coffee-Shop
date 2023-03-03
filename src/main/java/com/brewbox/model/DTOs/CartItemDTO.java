@@ -23,4 +23,5 @@ public class CartItemDTO {
     public BigDecimal getSubtotal(){
         return this.product.getPrice().multiply(BigDecimal.valueOf(quantity));
     }
+
 }

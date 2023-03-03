@@ -1,10 +1,12 @@
 package com.brewbox.service;
 
+import com.brewbox.model.DTOs.AddOrderDTO;
 import com.brewbox.model.DTOs.CartItemDTO;
-import com.brewbox.model.entity.CartItemEntity;
-import com.brewbox.model.entity.ProductEntity;
-import com.brewbox.model.entity.UserEntity;
+import com.brewbox.model.entity.*;
+import com.brewbox.model.entity.enums.OrderStatusEnum;
 import com.brewbox.repository.CartItemRepository;
+import com.brewbox.repository.OrderRepository;
+import com.brewbox.repository.OrderStatusRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,10 @@ public class ShoppingCartService {
 
     private final CartItemRepository cartItemRepository;
 
+    private final OrderStatusRepository orderStatusRepository;
+
+    private final OrderRepository orderRepository;
+
     private final ProductService productService;
 
     private final UserService userService;
@@ -27,9 +33,11 @@ public class ShoppingCartService {
     private final ModelMapper mapper;
 
     @Autowired
-    public ShoppingCartService(CartItemRepository cartItemRepository, ProductService productService, UserService userService, ModelMapper mapper) {
+    public ShoppingCartService(CartItemRepository cartItemRepository, ProductService productService, OrderStatusRepository orderStatusRepository, OrderRepository orderRepository, UserService userService, ModelMapper mapper) {
         this.cartItemRepository = cartItemRepository;
         this.productService = productService;
+        this.orderStatusRepository = orderStatusRepository;
+        this.orderRepository = orderRepository;
         this.userService = userService;
         this.mapper = mapper;
     }
@@ -74,6 +82,53 @@ public class ShoppingCartService {
 //        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
 //    }
 
+    public void removeProductFromCart(Long productId, UserDetails userDetails) {
+        UserEntity user = userService.getCurrentUser(userDetails);
+        ProductEntity product = mapper.map(productService.getProductById(productId), ProductEntity.class);
+
+        CartItemEntity cartItem = cartItemRepository.findByUserAndProduct(user, product).orElseThrow();
+
+        cartItemRepository.delete(cartItem);
+    }
+
+    @Transactional
+    public void makeOrder(AddOrderDTO addOrderDTO, UserDetails userDetails) {
+        UserEntity user = userService.getCurrentUser(userDetails);
+        OrderStatusEntity orderStatusNew = getOrderStatusNew();
+        List<CartItemEntity> allCartItemsByUser = cartItemRepository.findByUser(user);
+
+        OrderEntity newOrder = mapToOrderEntity(addOrderDTO);
+
+        newOrder.setUser(user);
+        newOrder.setStatus(orderStatusNew);
+
+        BigDecimal price = BigDecimal.ZERO;
+        for (CartItemEntity cartItem : allCartItemsByUser) {
+            ProductEntity productToAdd = cartItem.getProduct();
+
+            for (int i = 0; i < cartItem.getQuantity(); i++) {
+                newOrder.addProductToOrder(productToAdd);
+            }
+
+            BigDecimal subTotal = productToAdd.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity()));
+            price = price.add(subTotal);
+
+        }
+
+        newOrder.setPrice(price);
+        orderRepository.save(newOrder);
+        deleteCartItemsByUser(user.getId());
+    }
+
+    private void deleteCartItemsByUser(Long userId) {
+        this.cartItemRepository.deleteByUserId(userId);
+    }
+
+
+    private OrderStatusEntity getOrderStatusNew() {
+        return orderStatusRepository.findByStatus(OrderStatusEnum.NEW);
+    }
+
     private CartItemDTO mapToCartItemDTO(CartItemEntity cartItem) {
         return mapper.map(cartItem, CartItemDTO.class);
     }
@@ -81,4 +136,10 @@ public class ShoppingCartService {
     private CartItemEntity mapToCartItem(CartItemDTO cartItemDTO) {
         return mapper.map(cartItemDTO, CartItemEntity.class);
     }
+
+    private OrderEntity mapToOrderEntity(AddOrderDTO addOrderDTO) {
+        return mapper.map(addOrderDTO, OrderEntity.class);
+    }
+
+
 }
