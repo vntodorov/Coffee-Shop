@@ -5,10 +5,7 @@ import com.brewbox.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,18 +20,22 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/change-status")
-    public String changeOrderStatus(Model model){
-        model.addAttribute("orders", orderService.getAllOrders());
+    @ModelAttribute("orderDTO")
+    public OrderDTO orderDTO(){
+        return new OrderDTO();
+    }
+
+    @GetMapping("/change/status")
+    public String changeOrderStatus(Model model) {
+        model.addAttribute("orders", orderService.getAllNotDeliveredOrders());
         return "orders-change-status";
     }
 
-    @PutMapping("/change-status")
-    public String changeOrderStatus(@Valid OrderDTO orderDTO){
+    @PostMapping("/change/status/{oid}")
+    public String changeOrderStatus(@Valid OrderDTO orderDTO,
+                                    @PathVariable("oid") Long oid) {
 
-
-
-
-        return null;
+        orderService.changeOrderStatus(orderDTO, oid);
+        return "redirect:/orders/change/status";
     }
 }
