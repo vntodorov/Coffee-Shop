@@ -105,12 +105,16 @@ public class ProductController {
 
     }
 
-    @GetMapping("/comment/delete/{cid}/product/{pid}")
+    @PostMapping("/comment/delete/{cid}/product/{pid}")
     public String deleteCommentOfProduct(@PathVariable("cid") Long cid,
-                                         @PathVariable("pid") Long pid){
+                                         @PathVariable("pid") Long pid) {
         commentService.deleteCommentById(cid);
 
         return "redirect:/product/{pid}";
+    }
 
+    @GetMapping("/comment/delete/{cid}/product/{pid}")
+    public String invalidDeleteCommentOfProduct() {
+        return "redirect:/product/{pid}";
     }
 }

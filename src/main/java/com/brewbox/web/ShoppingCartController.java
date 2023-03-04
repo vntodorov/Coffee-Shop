@@ -2,6 +2,7 @@ package com.brewbox.web;
 
 import com.brewbox.model.DTOs.AddOrderDTO;
 import com.brewbox.model.DTOs.CartItemDTO;
+import com.brewbox.model.entity.OrderEntity;
 import com.brewbox.model.entity.UserEntity;
 import com.brewbox.service.ShoppingCartService;
 import com.brewbox.service.UserService;
@@ -67,7 +68,7 @@ public class ShoppingCartController {
         return "redirect:/product/{pid}";
     }
 
-    @GetMapping("/delete/product/{pid}")
+    @PostMapping("/delete/product/{pid}")
     public String removeProductFromCart(@PathVariable("pid") Long pid,
                                         @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -78,6 +79,11 @@ public class ShoppingCartController {
 
     }
 
+    @GetMapping("/delete/product/{pid}")
+    public String invalidDeleteProductFromCart() {
+        return "redirect:/cart";
+    }
+
     @GetMapping("/checkout")
     public String invalidCartCheckout() {
         return "redirect:/";
@@ -85,9 +91,12 @@ public class ShoppingCartController {
 
     @PostMapping("/checkout")
     public String cartCheckout(AddOrderDTO addOrderDTO,
-                               @AuthenticationPrincipal UserDetails userDetails) {
+                               @AuthenticationPrincipal UserDetails userDetails,
+                               Model model) {
 
-        shoppingCartService.makeOrder(addOrderDTO, userDetails);
+        OrderEntity order = shoppingCartService.makeOrder(addOrderDTO, userDetails);
+        model.addAttribute("order", order);
+
         return "shopping-cart-checkout";
     }
 }

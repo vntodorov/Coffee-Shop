@@ -92,7 +92,7 @@ public class ShoppingCartService {
     }
 
     @Transactional
-    public void makeOrder(AddOrderDTO addOrderDTO, UserDetails userDetails) {
+    public OrderEntity makeOrder(AddOrderDTO addOrderDTO, UserDetails userDetails) {
         UserEntity user = userService.getCurrentUser(userDetails);
         OrderStatusEntity orderStatusNew = getOrderStatusNew();
         List<CartItemEntity> allCartItemsByUser = cartItemRepository.findByUser(user);
@@ -118,6 +118,7 @@ public class ShoppingCartService {
         newOrder.setPrice(price);
         orderRepository.save(newOrder);
         deleteCartItemsByUser(user.getId());
+        return newOrder;
     }
 
     private void deleteCartItemsByUser(Long userId) {

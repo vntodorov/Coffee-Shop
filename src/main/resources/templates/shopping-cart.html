@@ -20,9 +20,12 @@
         <th:block th:each="cartItem : ${cartItems}">
             <div class="row border rounded">
                 <div class="col-1">
-                    <li class=""><a
-                            th:href="@{/cart/delete/product/{pid}(pid = ${cartItem.product.id})}">Delete</a>
-                    </li>
+                    <form th:action="@{/cart/delete/product/{pid}(pid = ${cartItem.product.id})}"
+                          th:method="post">
+                        <li class="">
+                            <input type="submit" value="Delete"/>
+                        </li>
+                    </form>
                 </div>
                 <div class="col-3">
                     <img th:src="@{${cartItem.product.imageUrl}}" class="img-fluid"/>
@@ -45,20 +48,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row m-1">&nbsp;</div>
-            <script type="text/javascript">
-                contextPath = "[[@{/}]]";
-                var csrfHeaderName = "[[${_csrf.headerName}]]"
-                var csrfValue = "[[${_csrf.token}]]";
-                var productId = [[${cartItem.product.id}]]
-
-
-
-
-
-
-
-            </script>
         </th:block>
     </div>
 
