@@ -3,11 +3,13 @@ package com.brewbox.service;
 import com.brewbox.model.DTOs.OrderDTO;
 import com.brewbox.model.entity.OrderEntity;
 import com.brewbox.model.entity.OrderStatusEntity;
+import com.brewbox.model.entity.UserEntity;
 import com.brewbox.model.entity.enums.OrderStatusEnum;
 import com.brewbox.repository.OrderRepository;
 import com.brewbox.repository.OrderStatusRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +61,15 @@ public class OrderService {
 
     private OrderDTO mapToOrderDTO(OrderEntity order) {
         return mapper.map(order, OrderDTO.class);
+    }
+
+    public List<OrderDTO> getUserOrders(UserEntity user) {
+
+        return orderRepository.
+                findByUser(user).
+                get().
+                stream().
+                map(this::mapToOrderDTO).toList();
+
     }
 }

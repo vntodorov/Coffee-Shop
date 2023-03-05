@@ -4,6 +4,7 @@ import com.brewbox.model.entity.enums.OrderStatusEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -15,6 +16,8 @@ public class OrderDTO {
     private UserDTO user;
 
     private String additionalInformation;
+
+    private BigDecimal price;
 
     private LocalDate date;
 

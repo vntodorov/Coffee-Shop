@@ -44,6 +44,10 @@
                 <th:block sec:authorize="isAuthenticated()">
                     <li class="nav-item">
                         <a class="nav-link"
+                           th:href="@{/orders}">My Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
                            th:href="@{/cart}">My Cart</a>
                     </li>
                     <li class="nav-item">
