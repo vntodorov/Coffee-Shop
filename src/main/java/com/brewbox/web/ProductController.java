@@ -3,6 +3,7 @@ package com.brewbox.web;
 import com.brewbox.model.DTOs.CartItemDTO;
 import com.brewbox.model.DTOs.CommentDTO;
 import com.brewbox.model.DTOs.ProductDTO;
+import com.brewbox.model.DTOs.SearchProductDTO;
 import com.brewbox.service.BrandService;
 import com.brewbox.service.CommentService;
 import com.brewbox.service.ProductService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -116,5 +118,16 @@ public class ProductController {
     @GetMapping("/comment/delete/{cid}/product/{pid}")
     public String invalidDeleteCommentOfProduct() {
         return "redirect:/product/{pid}";
+    }
+
+    @GetMapping("/products/search")
+    public String searchForProduct(@ModelAttribute("searchProductDTO")
+                                   @Valid SearchProductDTO searchProductDTO,
+                                   Model model) {
+
+        List<ProductDTO> products = productService.searchForProduct(searchProductDTO);
+        model.addAttribute("products", products);
+
+        return "search";
     }
 }

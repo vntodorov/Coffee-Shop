@@ -47,6 +47,6 @@ public class BrandService {
     }
 
     public BrandEntity findBrandByName(String brandName) {
-        return brandRepository.findByName(brandName).orElseThrow();
+        return brandRepository.findByName(brandName).orElse(null);
     }
 }

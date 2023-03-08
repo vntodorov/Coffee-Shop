@@ -2,6 +2,7 @@ package com.brewbox.service;
 
 import com.brewbox.model.DTOs.CommentDTO;
 import com.brewbox.model.DTOs.ProductDTO;
+import com.brewbox.model.DTOs.SearchProductDTO;
 import com.brewbox.model.entity.BrandEntity;
 import com.brewbox.model.entity.CategoryEntity;
 import com.brewbox.model.entity.ProductEntity;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -67,5 +69,19 @@ public class ProductService {
                 findById(id).
                 map(this::mapToProductDTO).
                 orElseThrow();
+    }
+
+    public List<ProductDTO> searchForProduct(SearchProductDTO searchProductDTO) {
+        BrandEntity brand = brandService.findBrandByName(searchProductDTO.getBrandName());
+
+        List<ProductEntity> products = productRepository.findByBrand(brand);
+
+        return products.
+                stream().
+                filter(p -> p.getPrice().compareTo(searchProductDTO.getMinPrice()) >= 0 &&
+                        p.getPrice().compareTo(searchProductDTO.getMaxPrice()) <= 0).
+                map(this::mapToProductDTO).
+                toList();
+
     }
 }
