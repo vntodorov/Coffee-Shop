@@ -14,4 +14,10 @@ public class SearchProductDTO {
     private BigDecimal minPrice;
 
     private BigDecimal maxPrice;
+
+    public boolean isEmpty() {
+        return (brandName == null || brandName.isEmpty()) &&
+                minPrice == null &&
+                maxPrice == null;
+    }
 }

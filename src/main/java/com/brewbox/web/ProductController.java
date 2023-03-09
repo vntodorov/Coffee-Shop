@@ -126,8 +126,10 @@ public class ProductController {
                                    Model model) {
 
         List<ProductDTO> products = productService.searchForProduct(searchProductDTO);
-        model.addAttribute("products", products);
 
+        if (!searchProductDTO.isEmpty()) {
+            model.addAttribute("products", products);
+        }
         return "search";
     }
 }
