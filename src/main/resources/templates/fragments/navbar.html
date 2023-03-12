@@ -3,15 +3,19 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+
 <body>
 
-<div>
-    <nav class="navbar navbar-custom navbar-expand-lg navbar-light bg-light">
+<div class="wrapper">
+    <nav>
+        <div class="menu-icon">
+            <i class="fa fa-bars fa-2x"></i>
+        </div>
         <a href="/">
             <img alt="brewbox logo" th:src="@{/images/logo.png}" class="logo">
         </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto col-12 justify-content-between">
+        <div class="menu">
+            <ul>
                 <li class="nav-item">
                     <a class="nav-link" href="/products/search">Search For Product</a>
                 </li>
@@ -36,7 +40,8 @@
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/add">Add
                             Moderator</a>
                         <div class="dropdown-divider" sec:authorize="hasRole('ADMIN')"></div>
-                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/remove">Remove Admin</a>
+                        <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/admins/remove">Remove
+                            Admin</a>
                         <a class="dropdown-item" sec:authorize="hasRole('ADMIN')" href="/moderators/remove">Remove
                             Moderator</a>
                     </div>
@@ -77,9 +82,6 @@
             </ul>
         </div>
     </nav>
-
-
 </div>
-
 </body>
 </html>
