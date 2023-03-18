@@ -32,14 +32,24 @@ public class ModeratorService {
     }
 
     public List<UserDTO> getAllNonModerators() {
-        return userRepository.
-                findAll().
-                stream().
-                filter(u -> u.getRoles().contains(clientRole())).
-                filter(u -> !u.getRoles().contains(adminRole())).
-                filter(u -> !u.getRoles().contains(moderatorRole())).
-                map(this::mapToUserDTO).
-                toList();
+        List<UserEntity> all = userRepository.findAll();
+        List<UserRoleEntity> allRoles = userRoleRepository.findAll();
+        UserRoleEntity client = userRoleRepository.findByRole(CLIENT).orElseThrow();
+        UserRoleEntity admin = userRoleRepository.findByRole(ADMIN).orElseThrow();
+        UserRoleEntity moderator = userRoleRepository.findByRole(MODERATOR).orElseThrow();
+        List<UserEntity> firstStream = all.stream().filter(u -> u.getRoles().contains(client)).toList();
+        List<UserEntity> secondStream = firstStream.stream().filter(u -> !u.getRoles().contains(admin)).toList();
+        List<UserEntity> thirdStream = secondStream.stream().filter(u -> !u.getRoles().contains(moderator)).toList();
+        List<UserDTO> userDTOS = thirdStream.stream().map(this::mapToUserDTO).toList();
+        return userDTOS;
+//        return userRepository.
+//                findAll().
+//                stream().
+//                filter(u -> u.getRoles().contains(clientRole())).
+//                filter(u -> !u.getRoles().contains(adminRole())).
+//                filter(u -> !u.getRoles().contains(moderatorRole())).
+//                map(this::mapToUserDTO).
+//                toList();
     }
 
     public void addModerator(Long id) {
