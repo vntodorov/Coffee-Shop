@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.brewbox.model.entity.enums.UserRoleEnum.*;
 
@@ -32,24 +34,14 @@ public class ModeratorService {
     }
 
     public List<UserDTO> getAllNonModerators() {
-        List<UserEntity> all = userRepository.findAll();
-        List<UserRoleEntity> allRoles = userRoleRepository.findAll();
-        UserRoleEntity client = userRoleRepository.findByRole(CLIENT).orElseThrow();
-        UserRoleEntity admin = userRoleRepository.findByRole(ADMIN).orElseThrow();
-        UserRoleEntity moderator = userRoleRepository.findByRole(MODERATOR).orElseThrow();
-        List<UserEntity> firstStream = all.stream().filter(u -> u.getRoles().contains(client)).toList();
-        List<UserEntity> secondStream = firstStream.stream().filter(u -> !u.getRoles().contains(admin)).toList();
-        List<UserEntity> thirdStream = secondStream.stream().filter(u -> !u.getRoles().contains(moderator)).toList();
-        List<UserDTO> userDTOS = thirdStream.stream().map(this::mapToUserDTO).toList();
-        return userDTOS;
-//        return userRepository.
-//                findAll().
-//                stream().
-//                filter(u -> u.getRoles().contains(clientRole())).
-//                filter(u -> !u.getRoles().contains(adminRole())).
-//                filter(u -> !u.getRoles().contains(moderatorRole())).
-//                map(this::mapToUserDTO).
-//                toList();
+        return userRepository.
+                findAll().
+                stream().
+                filter(u -> u.getRoles().contains(clientRole())).
+                filter(u -> !u.getRoles().contains(adminRole())).
+                filter(u -> !u.getRoles().contains(moderatorRole())).
+                map(this::mapToUserDTO).
+                toList();
     }
 
     public void addModerator(Long id) {

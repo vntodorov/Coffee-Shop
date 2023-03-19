@@ -33,12 +33,14 @@ public class AdminService {
     }
 
     public List<UserDTO> getAllNonAdmins() {
-        return userRepository.
+        List<UserDTO> userDTOS = userRepository.
                 findAll().
                 stream().
                 filter(u -> !u.getRoles().contains(adminRole()))
                 .map(this::mapToUserDTO)
                 .toList();
+
+        return userDTOS;
     }
 
     public List<UserDTO> getAllAdmins(UserDetails userDetails) {

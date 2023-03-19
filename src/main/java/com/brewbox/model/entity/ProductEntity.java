@@ -38,6 +38,6 @@ public class ProductEntity extends BaseEntity{
     @Column(nullable = false)
     private String imageUrl;
 
-    @OneToMany(targetEntity = CommentEntity.class, mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = CommentEntity.class, mappedBy = "product", fetch = FetchType.EAGER)
     private List<CommentEntity> comments;
 }

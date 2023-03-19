@@ -8,10 +8,13 @@ import com.brewbox.model.entity.UserEntity;
 import com.brewbox.repository.CommentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -62,6 +65,10 @@ public class CommentService {
     }
 
     public void deleteCommentById(Long cid) {
-        this.commentRepository.deleteById(cid);
+        Optional<CommentEntity> commentById = commentRepository.findById(cid);
+        if (commentById.isPresent()){
+            CommentEntity comment = commentById.get();
+            commentRepository.delete(comment);
+        }
     }
 }

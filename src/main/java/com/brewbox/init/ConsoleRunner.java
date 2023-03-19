@@ -31,29 +31,7 @@ public class ConsoleRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        initRoles();
-        initCategories();
         initOrderStatuses();
-    }
-
-    private void initRoles() {
-        if (userRoleRepository.count() == 0) {
-            for (UserRoleEnum roleEnum : UserRoleEnum.values()) {
-                UserRoleEntity role = new UserRoleEntity();
-                role.setRole(roleEnum);
-                userRoleRepository.save(role);
-            }
-        }
-    }
-
-    private void initCategories() {
-        if (categoryRepository.count() == 0) {
-            for (CategoryEnum categoryEnum : CategoryEnum.values()) {
-                CategoryEntity category = new CategoryEntity();
-                category.setName(categoryEnum);
-                categoryRepository.save(category);
-            }
-        }
     }
 
     private void initOrderStatuses() {
