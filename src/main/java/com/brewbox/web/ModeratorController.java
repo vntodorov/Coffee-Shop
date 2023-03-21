@@ -1,6 +1,5 @@
 package com.brewbox.web;
 
-import com.brewbox.service.AdminService;
 import com.brewbox.service.ModeratorService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;

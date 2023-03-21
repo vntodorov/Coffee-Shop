@@ -1,11 +1,11 @@
 package com.brewbox.model.DTOs;
 
 
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Getter

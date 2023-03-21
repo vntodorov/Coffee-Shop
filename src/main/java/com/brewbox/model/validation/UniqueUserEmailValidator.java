@@ -3,8 +3,8 @@ package com.brewbox.model.validation;
 import com.brewbox.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class UniqueUserEmailValidator implements ConstraintValidator<UniqueUserEmail, String> {
 

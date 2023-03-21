@@ -3,9 +3,11 @@ package com.brewbox.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -43,13 +45,13 @@ public class UserEntity extends BaseEntity{
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private Set<UserRoleEntity> roles = new HashSet<>();
+    private List<UserRoleEntity> roles = new ArrayList<>();
 
     public void addRole(UserRoleEntity role){
-        roles.add(role);
+        this.roles.add(role);
     }
 
     public void removeRole(UserRoleEntity role){
-        roles.remove(role);
+        this.roles.remove(role);
     }
 }

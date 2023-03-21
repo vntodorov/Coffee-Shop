@@ -2,10 +2,8 @@ package com.brewbox.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Getter
 @Setter

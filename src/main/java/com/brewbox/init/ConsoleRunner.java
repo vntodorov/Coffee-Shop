@@ -1,11 +1,7 @@
 package com.brewbox.init;
 
-import com.brewbox.model.entity.CategoryEntity;
 import com.brewbox.model.entity.OrderStatusEntity;
-import com.brewbox.model.entity.UserRoleEntity;
-import com.brewbox.model.entity.enums.CategoryEnum;
 import com.brewbox.model.entity.enums.OrderStatusEnum;
-import com.brewbox.model.entity.enums.UserRoleEnum;
 import com.brewbox.repository.CategoryRepository;
 import com.brewbox.repository.OrderStatusRepository;
 import com.brewbox.repository.UserRoleRepository;

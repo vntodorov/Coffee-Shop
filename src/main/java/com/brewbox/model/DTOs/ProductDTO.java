@@ -4,7 +4,8 @@ import com.brewbox.model.entity.enums.CategoryEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;

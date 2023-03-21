@@ -5,8 +5,8 @@ INSERT INTO categories(id, name)
 VALUES (1, 'LATTE'), (2, 'ESPRESSO'), (3, 'CAPPUCCINO'), (4, 'AMERICANO');
 
 INSERT INTO users(created, email, first_name, image_url, last_name, middle_name, password, username)
-VALUES ('2023-03-12', 'admin@abv.bg', 'admin', null, 'admin', 'admin', '5fb750006d3cd45f1c35a8361accfae5ebdae36f76799c756c6822ab2feeb41652471508140ff90e', 'admin'),
-       ('2023-03-12', 'user@abv.bg', 'user', null, 'user', 'user', '5fb750006d3cd45f1c35a8361accfae5ebdae36f76799c756c6822ab2feeb41652471508140ff90e', 'user');
+VALUES ('2023-03-12', 'admin@abv.bg', 'admin', null, 'admin', 'admin', '$2a$10$8/hM3Sukc/tF0X9axqD9keyJD46aBdm2OyeQt5hNxNkzMMhRyEuJy', 'admin'),
+       ('2023-03-12', 'user@abv.bg', 'user', null, 'user', 'user', '$2a$10$8/hM3Sukc/tF0X9axqD9keyJD46aBdm2OyeQt5hNxNkzMMhRyEuJy', 'user');
 
 INSERT INTO users_roles(user_id, role_id)
 VALUES (1,1), (1,3), (2,1);
