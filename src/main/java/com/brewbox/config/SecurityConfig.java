@@ -53,7 +53,7 @@ public class SecurityConfig {
                 authorizeHttpRequests().
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll().
-                requestMatchers( "/admins/**", "/moderators/**").hasRole(UserRoleEnum.ADMIN.name()).
+                requestMatchers("/admins/**", "/moderators/**").hasRole(UserRoleEnum.ADMIN.name()).
                 anyRequest().authenticated().
                 and().
                 formLogin().
@@ -61,7 +61,12 @@ public class SecurityConfig {
                 usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
                 passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                 defaultSuccessUrl("/", true).
-                failureForwardUrl("/users/login-error");
+                failureForwardUrl("/users/login-error").
+                and().
+                logout().
+                logoutUrl("/users/logout").
+                logoutSuccessUrl("/").
+                invalidateHttpSession(true);
 
         return httpSecurity.build();
     }
