@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -55,6 +54,7 @@ public class ModeratorService {
     }
 
     public List<UserDTO> getAllModerators(UserDetails userDetails) {
+
         return userRepository.
                 findAll().
                 stream().
@@ -75,7 +75,7 @@ public class ModeratorService {
     }
 
     private UserRoleEntity moderatorRole() {
-        return userRoleRepository.findByRole(MODERATOR).orElseThrow();
+        return userRoleRepository.findByRole(MODERATOR).get();
     }
 
     private UserRoleEntity adminRole() {

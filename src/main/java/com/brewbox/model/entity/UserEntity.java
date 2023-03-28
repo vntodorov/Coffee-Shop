@@ -45,7 +45,7 @@ public class UserEntity extends BaseEntity{
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )
-    private List<UserRoleEntity> roles = new ArrayList<>();
+    private Set<UserRoleEntity> roles = new HashSet<>();
 
     public void addRole(UserRoleEntity role){
         this.roles.add(role);

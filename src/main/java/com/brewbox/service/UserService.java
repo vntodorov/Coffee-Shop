@@ -3,18 +3,27 @@ package com.brewbox.service;
 import com.brewbox.model.DTOs.UserRegisterDTO;
 import com.brewbox.model.entity.UserEntity;
 import com.brewbox.model.entity.UserRoleEntity;
+
 import static com.brewbox.model.entity.enums.UserRoleEnum.*;
+
 import com.brewbox.repository.UserRepository;
 import com.brewbox.repository.UserRoleRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.function.Consumer;
 
 
 @Service
@@ -40,24 +49,16 @@ public class UserService {
     }
 
 
-    public void registerAndLogin(UserRegisterDTO userRegisterDTO) {
+    public void registerUser(UserRegisterDTO userRegisterDTO,
+                                 Consumer<Authentication> successfulLoginProcessor) {
         UserEntity userToRegister = mapper.map(userRegisterDTO, UserEntity.class);
         userToRegister.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
         userToRegister.addRole(clientRole());
 
         userRepository.save(userToRegister);
-        login(userToRegister.getEmail());
 
-    }
-
-    public UserEntity getCurrentUser(UserDetails userDetails){
-        return userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
-
-    }
-
-    private void login(String registerAttribute) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(registerAttribute);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(userToRegister.getEmail());
 
         Authentication auth =
                 new UsernamePasswordAuthenticationToken(
@@ -66,12 +67,16 @@ public class UserService {
                         userDetails.getAuthorities()
                 );
 
-        SecurityContextHolder.
-                getContext().
-                setAuthentication(auth);
+        successfulLoginProcessor.accept(auth);
+
     }
 
-    private UserRoleEntity clientRole(){
+    public UserEntity getCurrentUser(UserDetails userDetails) {
+        return userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+
+    }
+
+    private UserRoleEntity clientRole() {
         return userRoleRepository.
                 findByRole(CLIENT).
                 orElseThrow();
