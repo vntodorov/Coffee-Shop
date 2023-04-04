@@ -1,6 +1,7 @@
 package com.brewbox.service;
 
 import com.brewbox.model.DTOs.UserDTO;
+import com.brewbox.model.entity.BrewboxUserDetails;
 import com.brewbox.model.entity.UserEntity;
 import com.brewbox.model.entity.UserRoleEntity;
 
@@ -43,12 +44,12 @@ public class AdminService {
         return userDTOS;
     }
 
-    public List<UserDTO> getAllAdmins(UserDetails userDetails) {
+    public List<UserDTO> getAllAdmins(BrewboxUserDetails brewboxUserDetails) {
         return userRepository.
                 findAll().
                 stream().
                 filter(u -> u.getRoles().contains(adminRole()))
-                .filter(u -> !u.getUsername().equals(userDetails.getUsername()))
+                .filter(u -> !u.getUsername().equals(brewboxUserDetails.getUsername()))
                 .map(this::mapToUserDTO)
                 .toList();
     }

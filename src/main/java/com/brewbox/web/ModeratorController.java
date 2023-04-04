@@ -1,5 +1,6 @@
 package com.brewbox.web;
 
+import com.brewbox.model.entity.BrewboxUserDetails;
 import com.brewbox.service.ModeratorService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,8 +35,8 @@ public class ModeratorController {
     }
 
     @GetMapping("/remove")
-    public String removeModerator(Model model, @AuthenticationPrincipal UserDetails userDetails){
-        model.addAttribute("moderators", moderatorService.getAllModerators(userDetails));
+    public String removeModerator(Model model, @AuthenticationPrincipal BrewboxUserDetails brewboxUserDetails){
+        model.addAttribute("moderators", moderatorService.getAllModerators(brewboxUserDetails));
         return "moderator-remove";
     }
 

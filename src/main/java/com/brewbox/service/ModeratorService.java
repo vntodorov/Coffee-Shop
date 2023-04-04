@@ -1,6 +1,7 @@
 package com.brewbox.service;
 
 import com.brewbox.model.DTOs.UserDTO;
+import com.brewbox.model.entity.BrewboxUserDetails;
 import com.brewbox.model.entity.UserEntity;
 import com.brewbox.model.entity.UserRoleEntity;
 import com.brewbox.repository.UserRepository;
@@ -53,13 +54,13 @@ public class ModeratorService {
         }
     }
 
-    public List<UserDTO> getAllModerators(UserDetails userDetails) {
+    public List<UserDTO> getAllModerators(BrewboxUserDetails brewboxUserDetails) {
 
         return userRepository.
                 findAll().
                 stream().
                 filter(u -> u.getRoles().contains(moderatorRole())).
-                filter(u -> !u.getUsername().equals(userDetails.getUsername())).
+                filter(u -> !u.getUsername().equals(brewboxUserDetails.getUsername())).
                 map(this::mapToUserDTO).
                 toList();
     }

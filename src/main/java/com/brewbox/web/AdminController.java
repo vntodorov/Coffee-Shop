@@ -1,5 +1,6 @@
 package com.brewbox.web;
 
+import com.brewbox.model.entity.BrewboxUserDetails;
 import com.brewbox.service.AdminService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,8 +33,8 @@ public class AdminController {
     }
 
     @GetMapping("/remove")
-    public String removeAdmin(Model model, @AuthenticationPrincipal UserDetails userDetails){
-        model.addAttribute("admins", adminService.getAllAdmins(userDetails));
+    public String removeAdmin(Model model, @AuthenticationPrincipal BrewboxUserDetails brewboxUserDetails){
+        model.addAttribute("admins", adminService.getAllAdmins(brewboxUserDetails));
         return "admin-remove";
     }
 
