@@ -51,7 +51,7 @@ public class UserService {
         UserEntity userToRegister = mapper.map(userRegisterDTO, UserEntity.class);
         userToRegister.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
 
-        userToRegister.addRole(clientRole());
+//        userToRegister.addRole(clientRole());
 
         userRepository.save(userToRegister);
 

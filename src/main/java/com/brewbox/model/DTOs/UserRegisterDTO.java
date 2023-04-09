@@ -45,6 +45,8 @@ public class UserRegisterDTO {
     @Size(min = 5)
     private String password;
 
+    @NotEmpty
+    @Size(min = 5)
     private String confirmPassword;
 
 }
