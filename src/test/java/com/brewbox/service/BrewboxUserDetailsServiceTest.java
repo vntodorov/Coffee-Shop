@@ -24,8 +24,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class BrewboxUserDetailsServiceTest {
 
-    private final String EXISTING_USERNAME = "admin";
-
     private final String NOT_EXISTING_EMAIL = "non-existent@example.com";
 
     private BrewboxUserDetailsService toTest;
@@ -40,6 +38,7 @@ public class BrewboxUserDetailsServiceTest {
 
     @Test
     void testUserFound() {
+        String EXISTING_USERNAME = "admin";
 
         UserRoleEntity testAdminRole = new UserRoleEntity();
         testAdminRole.setRole(UserRoleEnum.ADMIN);
@@ -48,6 +47,7 @@ public class BrewboxUserDetailsServiceTest {
         testClientRole.setRole(UserRoleEnum.CLIENT);
 
         UserEntity testUserEntity = new UserEntity();
+
         testUserEntity.setUsername(EXISTING_USERNAME);
         testUserEntity.setPassword("12345");
         testUserEntity.setRoles(Set.of(testClientRole, testAdminRole));
