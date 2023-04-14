@@ -31,127 +31,25 @@
         <div class="row d-flex justify-content-center">
             <div class="menu-content pb-60 col-lg-10">
                 <div class="title text-center">
-                    <h1 class="mb-10">What kind of Coffee we serve for you</h1>
-                    <p>Who are in extremely love with eco friendly system.</p>
+                    <h1 class="mb-10">BrewBox coffee brands</h1>
+                    <p>Check out our <b>TOP</b> coffee brands from all around the world!</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4" th:each="brand: ${brands}">
                 <div class="single-menu">
+                    <img th:src="${brand.imageUrl}" alt="Brand image" class="img-thumbnail"> <!--512x512-->
                     <div class="title-div justify-content-between d-flex">
-                        <h4>Cappuccino</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
+                        <h4>[[${brand.name}]]</h4>
                     </div>
                     <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
+                        [[${brand.description}]]
                     </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Americano</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
+                    <br>
+                    <div>
+                        <a class="card-link" th:href="@{http://www.{name}.com(name = ${#strings.replace(brand.name,' ','')})}">Brand's website</a>
                     </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Espresso</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
-                    </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Macchiato</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
-                    </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Mocha</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
-                    </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Coffee Latte</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
-                    </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Piccolo Latte</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
-                    </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Ristretto</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
-                    </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="single-menu">
-                    <div class="title-div justify-content-between d-flex">
-                        <h4>Affogato</h4>
-                        <p class="price float-right">
-                            $49
-                        </p>
-                    </div>
-                    <p>
-                        Usage of the Internet is becoming more common due to rapid advance.
-                    </p>
                 </div>
             </div>
         </div>

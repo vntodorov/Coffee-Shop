@@ -38,7 +38,7 @@ public class BrandService {
         return mapper.map(brand, BrandDTO.class);
     }
 
-    private BrandEntity mapToBrand(BrandDTO brandDTO){
+    private BrandEntity mapToBrand(BrandDTO brandDTO) {
         return mapper.map(brandDTO, BrandEntity.class);
     }
 
@@ -48,5 +48,13 @@ public class BrandService {
 
     public BrandEntity findBrandByName(String brandName) {
         return brandRepository.findByName(brandName).orElse(null);
+    }
+
+    public List<BrandDTO> findAllBrands() {
+        return brandRepository.
+                findAll().
+                stream().
+                map(this::mapToBrandDTO).
+                toList();
     }
 }
