@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/brands")
+@RequestMapping("/brands/add")
 public class BrandController {
 
     private final BrandService brandService;
@@ -30,18 +30,11 @@ public class BrandController {
     }
 
     @GetMapping
-    public String allBrands(Model model){
-        model.addAttribute("brands", brandService.getAllBrands());
-
-        return "brands";
-    }
-
-    @GetMapping("/add")
     public String addBrand(){
         return "brand-add";
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public String addBrand(@Valid BrandDTO brandDTO,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes){
@@ -55,6 +48,6 @@ public class BrandController {
 
         brandService.addBrand(brandDTO);
 
-        return "redirect:/brands";
+        return "redirect:/";
     }
 }

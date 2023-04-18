@@ -57,7 +57,7 @@ public class SecurityConfig {
         httpSecurity.
                 authorizeHttpRequests().
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll().
+                requestMatchers("/", "/users/login", "/users/register", "/users/login-error", "/products").permitAll().
                 requestMatchers("/admins/**", "/moderators/**").hasRole(UserRoleEnum.ADMIN.name()).
                 anyRequest().authenticated().
                 and().

@@ -29,7 +29,7 @@ body {
   }
 
   .banner-content h1 {
-       color: #f5f0f0;
+       color: black;
        font-size: 60px;
        font-weight: 600;
        line-height: 1em;
@@ -43,9 +43,9 @@ body {
    }
 
   .primary-btn {
-      background: #fff;
+      background: black;
       border: 1px solid transparent;
-      color: #222;
+      color: white;
       padding-left: 40px;
       padding-right: 40px;
       border-radius: 50px;
@@ -55,6 +55,10 @@ body {
       transition: all 0.3s ease 0s;
       cursor: pointer;
       position: relative;
+  }
+
+  .text-black{
+    color: black;
   }
 
   .menu-area {
