@@ -114,7 +114,7 @@
         </div>
     </div>
 </section>
-<h3 th:if="${products != null && products.size == 0}" class="text-info">
+<h3 th:if="${products != null && products.size() == 0}" class="text-info">
     There are no products with this brand within this price range!
 </h3>
 
