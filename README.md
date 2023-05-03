@@ -11,7 +11,7 @@
 <b><i>Note: BrewBox is in active development and it hasn't been deployed YET! You are free to check out the source code.</b></i>
 
 ## 🖼 Full Overview
-<b>Coming Tomorrow!</b>
+<b>Coming very soon!</b>
 
 ## ⚙ Built Using
 * [Java](https://www.java.com/en)
