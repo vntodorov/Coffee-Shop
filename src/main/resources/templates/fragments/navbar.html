@@ -49,10 +49,8 @@
                     </li>
                     <li class="nav-item">
                         <div class="form-inline my-2 my-lg-0 border px-3">
-                            <div class="logged-user">Welcome,
-                                <th:block th:text="${#authentication.principal.fullName}">X</th:block>
-                                !
-                            </div>
+                            <a class="nav-link" href="/profile">My profile</a>
+                            <th:block>|</th:block>
                             <form th:action="@{users/logout}"
                                   th:method="post">
                                 <input class="btn btn-link nav-link" type="submit" value="Logout">

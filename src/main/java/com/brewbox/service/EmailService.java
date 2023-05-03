@@ -35,7 +35,7 @@ public class EmailService {
             mimeMessageHelper.setSubject("Welcome to BrewBox!");
             mimeMessageHelper.setText(generateEmailText(userName), true);
 
-            javaMailSender.send(mimeMessageHelper.getMimeMessage());
+//            javaMailSender.send(mimeMessageHelper.getMimeMessage());
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
